@@ -1,5 +1,7 @@
 
+node_modules
+mongo_data/
+
 .dockerignore
 .gitignore
-node_modules
 Dockerfile

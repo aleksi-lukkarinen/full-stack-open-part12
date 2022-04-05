@@ -1,0 +1,11 @@
+docker container ls
+docker exec -it d3 mongo -u root -p example
+show dbs
+use the_database
+show collections
+db.todos.find({})
+db.todos.insertOne({text: "Become a superman!", done: false})
+db.todos.find({})
+exit
+set MONGO_URL=mongodb://the_username:the_password@localhost:3456/the_database&& npm run dev
+<direct a browser to http://localhost:3000/todos>

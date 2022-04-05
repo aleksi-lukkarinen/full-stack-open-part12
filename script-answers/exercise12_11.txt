@@ -1,0 +1,8 @@
+docker container ls
+docker exec -it 14 redis-cli
+KEYS *
+GET todo_counter
+SET todo_counter 9001
+DEL todo_counter
+GET todo_counter
+exit

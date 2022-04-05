@@ -38,13 +38,11 @@ const findByIdMiddleware = async (req, res, next) => {
   next();
 }
 
-/* DELETE todo. */
 singleRouter.delete('/', async (req, res) => {
   await req.todo.delete();
   res.sendStatus(200);
 });
 
-/* GET todo. */
 singleRouter.get('/', async (req, res) => {
   if (!req.todo) {
     return res.sendStatus(404);
@@ -53,8 +51,8 @@ singleRouter.get('/', async (req, res) => {
   res.send(req.todo);
 });
 
-/* PUT todo. */
 singleRouter.put('/', async (req, res) => {
+  // If the note was not found, there is nothing to modify
   if (!req.todo) {
     return res.sendStatus(404);
   }
@@ -63,26 +61,46 @@ singleRouter.put('/', async (req, res) => {
 
   const {text, done} = req.body;
 
-  if (text || typeof(text) === "string") {
-    const trimmedText = text.trim();
-    if (trimmedText.length > 0) {
-      entryToUpdate.text = trimmedText;
+  // Text does not have to be given,
+  // but if it is, it has to be valid.
+  if (text) {
+    if (typeof(text) === "string") {
+      const trimmedText = text.trim();
+      if (trimmedText.length > 0) {
+        entryToUpdate.text = trimmedText;
+      }
+    }
+
+    if (!entryToUpdate.text) {
+      return res.sendStatus(400);
+    }
+  }
+
+  // "Done" does not have to be given,
+  // but if it is, it has to be valid.
+  if (done != undefined) {
+    if (typeof(done) === "boolean") {
+      entryToUpdate.done = done;
     }
     else {
       return res.sendStatus(400);
     }
   }
 
-  if (typeof(done) === "boolean") {
-    entryToUpdate.done = done;
-  }
-  else {
+  // However, at least one of
+  // the values has to be given.
+  if (!entryToUpdate.text
+    && entryToUpdate.done === undefined) {
+
     return res.sendStatus(400);
   }
 
+  // Perform the update.
   const updatedEntry =
-    await Todo.findByIdAndUpdate(
-      req.todo._id, entryToUpdate, {
+    await Todo.findOneAndUpdate(
+      {_id: req.todo._id},
+      {$set: entryToUpdate},
+      {
         new: true,
         useFindAndModify: false,
       });

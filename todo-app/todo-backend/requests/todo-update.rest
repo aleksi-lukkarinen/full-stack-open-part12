@@ -3,5 +3,5 @@ Content-Type: application/json
 
 {
   "text": "Opi konteistaaaa!",
-  "done": false
+  "done": true
 }

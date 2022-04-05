@@ -19,7 +19,8 @@ if (!REDIS_URL) {
     url: REDIS_URL
   });
 
-  client.set(config.REDIS_ID_TODO_COUNT, Number.NaN);
+  // If the values are wanted to be refreshed on each restart:
+  // client.set(config.REDIS_ID_TODO_COUNT, Number.NaN);
 
   getAsync = promisify(client.get).bind(client);
   setAsync = promisify(client.set).bind(client) ;

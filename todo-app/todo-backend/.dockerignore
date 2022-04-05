@@ -1,6 +1,7 @@
 
 node_modules
 mongo_data/
+redis_data/
 
 .dockerignore
 .gitignore

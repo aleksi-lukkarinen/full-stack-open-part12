@@ -1,6 +1,9 @@
 # Mongo database
 mongo_data/
 
+# Redis database
+redis_data/
+
 # Logs
 logs
 *.log

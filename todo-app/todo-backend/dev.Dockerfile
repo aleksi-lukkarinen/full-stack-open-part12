@@ -11,4 +11,4 @@ RUN npm install
 
 ENV DEBUG=todo-backend:*
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]

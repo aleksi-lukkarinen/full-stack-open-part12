@@ -1,18 +1,34 @@
 
-FROM node:16
+FROM node:16 AS test-phase
+
+ARG BACKEND_URL
 
 USER node
-
 WORKDIR /usr/src/app
 
 COPY --chown=node:node . .
 
 RUN npm ci
-# --only=production
-
 RUN CI=true npm test
 
-ENV DEBUG=todo-frontend:*
-ENV REACT_APP_BACKEND_URL=http://localhost:3001/
 
-CMD npm start
+
+FROM node:16 AS build-phase
+
+ARG BACKEND_URL
+ENV REACT_APP_BACKEND_URL=${BACKEND_URL:-/api/}
+
+ENV NODE_ENV=production
+
+USER node
+WORKDIR /usr/src/app
+
+COPY --from=test-phase /usr/src/app /usr/src/app
+
+RUN npm run build
+
+
+
+FROM nginx:1.21.6 AS serve-phase
+
+COPY --from=build-phase /usr/src/app/build /usr/share/nginx/html

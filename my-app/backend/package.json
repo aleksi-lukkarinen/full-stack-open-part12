@@ -5,7 +5,7 @@
   "scripts": {
     "start": "json-server ./data/db.json"
   },
-  "devDependencies": {
+  "dependencies": {
     "json-server": "^0.16.3"
   }
 }

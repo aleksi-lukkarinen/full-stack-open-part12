@@ -11,7 +11,7 @@ WORKDIR /usr/src/app
 ENV DEBUG=phonebook-frontend:*
 
 COPY --chown=node:node package.json package-lock.json ./
-RUN npm install && npm cache clean --force
+RUN npm install && npm prune && npm cache clean --force
 
 COPY --chown=node:node . .
 

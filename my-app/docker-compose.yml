@@ -1,8 +1,9 @@
 
 x-common-env: &env_constants
   PHONEBOOK_FRONTEND_NODE_IMAGE: ${PHONEBOOK_FRONTEND_NODE_IMAGE:-16.14.2-alpine3.15}
+  PHONEBOOK_FRONTEND_NGINX_IMAGE: ${PHONEBOOK_FRONTEND_NGINX_IMAGE:-1.21.6-alpine}
   PHONEBOOK_BACKEND_NODE_IMAGE: ${PHONEBOOK_BACKEND_NODE_IMAGE:-16.14.2-alpine3.15}
-  PHONEBOOK_BACKEND_URL: ${PHONEBOOK_BACKEND_URL:-http://localhost:3001/}
+  PHONEBOOK_BACKEND_URL: ${PHONEBOOK_BACKEND_URL:-/api/}
 
 
 services:
@@ -15,48 +16,41 @@ services:
       - ${PHONEBOOK_REVERSE_PROXY_PORT:-8080}:80
     networks:
       - phonebook
-    container_name: phonebook-dev-reverse-proxy
+    container_name: phonebook-prod-reverse-proxy
     depends_on:
       - frontend
 
   frontend:
-    image: phonebook-dev-frontend
+    image: phonebook-prod-frontend
     build:
       context: ./frontend
-      dockerfile: dev.Dockerfile
+      dockerfile: Dockerfile
       args:
         <<: *env_constants
-    volumes:
-      - ./frontend/:/usr/src/app
-    ports:
-      - ${PHONEBOOK_FRONTEND_DEV_PORT:-3000}:3000
     networks:
       - phonebook
-    container_name: phonebook-dev-frontend
+    container_name: phonebook-prod-frontend
     depends_on:
       - backend
 
   backend:
-    image: phonebook-dev-backend
+    image: phonebook-prod-backend
     build:
       context: ./backend
-      dockerfile: dev.Dockerfile
+      dockerfile: Dockerfile
       args:
         <<: *env_constants
     volumes:
-      - ./backend/:/usr/src/app
       - db:/usr/src/app/data
-    ports:
-      - ${PHONEBOOK_BACKEND_DEV_PORT:-3001}:3000
     networks:
       - phonebook
-    container_name: phonebook-dev-backend
+    container_name: phonebook-prod-backend
 
 
 networks:
   phonebook:
-    name: phonebook-dev
+    name: phonebook-prod
 
 volumes:
   db:
-    name: phonebook-dev-db
+    name: phonebook-prod-db

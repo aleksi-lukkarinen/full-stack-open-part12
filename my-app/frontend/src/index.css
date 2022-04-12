@@ -1,0 +1,33 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+H2 {
+
+}
+
+.notificationBox {
+  width: 30em;
+  font-size: 90%;
+  font-weight: bold;
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+.infoVisible {
+  margin-top: 2em;
+  padding: 0.5em;
+  background: #eeffee;
+  border: 1px solid #aabbaa;
+  color: darkgreen;
+  visibility: visible;
+}
+
+.errorVisible {
+  margin-top: 2em;
+  padding: 0.5em;
+  background: #ffeeee;
+  border: 1px solid #bbaaaa;
+  color: maroon;
+  visibility: visible;
+}

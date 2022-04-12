@@ -1,0 +1,11 @@
+{
+  "name": "phonebook-backend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "json-server ./data/db.json"
+  },
+  "devDependencies": {
+    "json-server": "^0.16.3"
+  }
+}

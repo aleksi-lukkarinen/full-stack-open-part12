@@ -1,0 +1,31 @@
+# Version control
+**/.git/
+**/.gitignore
+
+# Editors / IDEs
+**/.vscode/
+**/.editorconfig
+
+# Dependencies
+**/node_modules/
+
+# Build and testing
+**/build/
+**/coverage/
+
+# Docker
+**/.dockerignore
+**/*Dockerfile*
+**/*docker-compose*
+
+# Local environments
+**/.env.local
+**/.env.*.local
+
+# Miscellaneous
+**/.cache/
+**/.DS_Store
+**/*.bak
+**/*.log
+**/*.md
+**/*.tmp

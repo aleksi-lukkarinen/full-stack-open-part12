@@ -31,4 +31,6 @@ RUN npm run build
 
 FROM nginx:1.21.6 AS serve-phase
 
+COPY ./nginx.prod.conf /etc/nginx/nginx.conf
+
 COPY --from=build-phase /usr/src/app/build /usr/share/nginx/html
